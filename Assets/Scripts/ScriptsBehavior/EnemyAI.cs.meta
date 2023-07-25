@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f55bf79cb7700d945840c5630248437e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - agent: {instanceID: 0}
+  - player: {instanceID: 0}
+  - getDamage: {fileID: 8300000, guid: 9369e4d69dbe0984d991b0e972014855, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

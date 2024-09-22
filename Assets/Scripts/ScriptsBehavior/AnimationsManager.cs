@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 
 public class AnimationsManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class AnimationsManager : MonoBehaviour
         {
             watchAround();
             checkIfIsWalking();
-            if (checkConditions.isJumping)
+            if (checkConditions.IsJumping)
                 StartCoroutine(startJumping());
         }
     }
@@ -39,11 +40,11 @@ public class AnimationsManager : MonoBehaviour
     }
     private void checkIfIsWalking()
     {
-        if (checkConditions.horizontal != 0 || checkConditions.vertical != 0)
+        if (checkConditions.PlayerMovementDirection.x != 0 || checkConditions.PlayerMovementDirection.y != 0)
         {
             PlayerAnimation.SetBool("IsGoingToRun", true);
-            PlayerAnimation.SetFloat("X", checkConditions.horizontal);
-            PlayerAnimation.SetFloat("Y", checkConditions.vertical);
+            PlayerAnimation.SetFloat("X", checkConditions.PlayerMovementDirection.x);
+            PlayerAnimation.SetFloat("Y", checkConditions.PlayerMovementDirection.y);
         }
         else
         {
@@ -56,7 +57,6 @@ public class AnimationsManager : MonoBehaviour
         PlayerAnimation.SetBool("IsGoingToJump", true);
         yield return new WaitForSeconds(0.05f);
         PlayerAnimation.SetBool("IsGoingToJump", false);
-        checkConditions.isJumping = false;
     }
     public void isShooter(bool isShoot)
     {

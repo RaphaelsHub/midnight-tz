@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using Controllers;
 using UnityEngine;
@@ -12,10 +12,7 @@ public class PlayerStaticAfterAnimations : MonoBehaviour
 
     void LateUpdate()
     {
-        if (GameManager.gameIsActive && !GameManager.gameIsOver)
-        {
             transform.rotation = Quaternion.Euler(playerController.transform.rotation.eulerAngles + offsetEuler);
             transform.position = playerController.transform.position + offset;
-        }
     }
-}
+}*/

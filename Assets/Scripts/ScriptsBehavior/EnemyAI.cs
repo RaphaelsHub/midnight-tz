@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -39,8 +39,6 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.gameIsOver && GameManager.gameIsActive)
-        {
             playerAbleWatching = Physics.CheckSphere(transform.position, watchingRange, playerMask); //Позиция, радиус, и слой
             playerAbleToAtacking = Physics.CheckSphere(transform.position, attackingRange, playerMask);
 
@@ -50,7 +48,6 @@ public class EnemyAI : MonoBehaviour
                 runAfterMeat();
             if (playerAbleToAtacking && playerAbleWatching)
                 eatMeat();
-        }
     }
 
 
@@ -116,3 +113,4 @@ public class EnemyAI : MonoBehaviour
         isAttacking = false;
     }
 }
+*/

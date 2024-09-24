@@ -28,7 +28,7 @@ namespace Controllers
         
         private float Speed => Input.GetKey(KeyCode.LeftShift) ? speedRun : speedWalk;
         public bool IsJumping => !characterController.isGrounded || Input.GetKeyDown(KeyCode.Space);
-        public Vector2 CameraMovementDirection => new(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        private Vector2 CameraMovementDirection => new(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         public Vector3 PlayerMovementDirection => new(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
 
         private void Awake()
@@ -66,7 +66,7 @@ namespace Controllers
                     Velocity.y = jumpForce;
             }
             else
-                Velocity.y -= 9.8f * 2 * Time.deltaTime;
+                Velocity.y -= gravity * 2 * Time.deltaTime;
         }
         
         public void RotateCamera(Vector2 direction)

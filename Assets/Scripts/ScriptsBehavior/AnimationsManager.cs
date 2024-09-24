@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using Controllers;
 using UnityEngine;
@@ -14,13 +14,10 @@ public class AnimationsManager : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.gameIsActive && !GameManager.gameIsOver)
-        {
             watchAround();
             checkIfIsWalking();
             if (checkConditions.IsJumping)
                 StartCoroutine(startJumping());
-        }
     }
     private void watchAround()
     {
@@ -63,3 +60,4 @@ public class AnimationsManager : MonoBehaviour
         PlayerAnimation.SetBool("IsShooting", isShoot);
     }
 }
+*/

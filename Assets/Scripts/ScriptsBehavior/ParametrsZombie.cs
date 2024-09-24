@@ -1,62 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+/*using UnityEngine;
 
-public class ParametrsZombie : MonoBehaviour
+namespace ScriptsBehavior
 {
-    int global;
-    public int health;
-    public int maxHealth;
-    private AudioSource mus;
-    public AudioClip die;
-    private Animator animator;
-    [SerializeField ]private StorDataAboutKills count;
-
-    public int Health
+    public class Zombie : MonoBehaviour
     {
-        get { return health; }
-        set
+        private int health;
+        private int maxHealth;
+        public int Health
         {
-            health = Mathf.Clamp(value, 0, maxHealth);
+            get => health;
+            set => health = Mathf.Clamp(value, 0, maxHealth);
         }
-    }
-    public int MaxHealth
-    {
-        get { return maxHealth; }
-        set
+        public int MaxHealth
         {
-            maxHealth = Mathf.Max(0, value);
-            Health = Mathf.Max(health, maxHealth);
+            get => maxHealth;
+            set
+            {
+                maxHealth = Mathf.Max(0, value);
+                Health = Mathf.Max(health, maxHealth);
+            }
         }
-    }
-    private void Start()
-    {
-        animator = GetComponent<Animator>();
-        mus = GetComponent<AudioSource>();
-        MaxHealth = 300;
-    }
-    public void TakeDamage(int damage)
-    {
-        if (damage == 999)
-            Die();
-
-        else
+        
+        public void TakeDamage(int damage)
         {
             Health -= damage;
             if (Health <= 0)
                 Die();
         }
-
-        global = damage;
-    }
-    private void Die()
-    {
-        animator.SetTrigger("death");
-        mus.PlayOneShot(die, 0.3f);
-        count.Kills++;
-        if (global > 200)
-            count.HeadShots++;
-        Destroy(gameObject);
+        
+        private void Die()
+        {
+            Destroy(gameObject);
+        }
     }
 }
 
+*/

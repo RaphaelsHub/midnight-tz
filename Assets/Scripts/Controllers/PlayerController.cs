@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿using System;
+using Interfaces;
+using Systems;
 using UnityEngine;
 
 namespace Controllers
@@ -7,7 +9,7 @@ namespace Controllers
     {
         // Constant for player movement
         private const float gravity = 9.8f;
-
+        
         // Player movement
         [SerializeField] private float speedWalk = 5f;
         [SerializeField] private float speedRun = 11f;
@@ -25,12 +27,13 @@ namespace Controllers
 
         private Camera playerCamera;
         private CharacterController characterController;
+        private HealthSystem healthSystem;
         
         private float Speed => Input.GetKey(KeyCode.LeftShift) ? speedRun : speedWalk;
         public bool IsJumping => !characterController.isGrounded || Input.GetKeyDown(KeyCode.Space);
         private Vector2 CameraMovementDirection => new(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
         public Vector3 PlayerMovementDirection => new(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-
+        
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -41,6 +44,11 @@ namespace Controllers
                 Debug.LogError("CharacterController or Camera not assigned!");
                 enabled = false;
             }
+        }
+
+        private void Start()
+        {
+            healthSystem = new HealthSystem(100);
         }
 
         private void Update()
@@ -86,6 +94,16 @@ namespace Controllers
         public void RotatePlayer(Vector2 direction)
         {
             transform.rotation = Quaternion.Euler(0, direction.x, 0);
+        }
+        
+        public void TakeDamage(uint damage)
+        {
+            healthSystem.TakeDamage(damage);
+        }
+        
+        public void Heal(uint heal)
+        {
+            healthSystem.Heal(heal);
         }
     }
 }

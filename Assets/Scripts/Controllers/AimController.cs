@@ -1,72 +1,63 @@
 using Interfaces;
 using UnityEngine;
+using System.Collections;
+using Systems;
 
 namespace Controllers
 {
     public class AimController : MonoBehaviour, IAim
     {
-        private float mainCameraPrevPos;
-        private float gunCameraPrevPos;
+        private Camera mainCamera;
+        private bool isReloadingActive;  
 
-        [SerializeField] private float speedOfBullet = 100f;
+        private bool IsShooting => Input.GetMouseButtonDown(0) && !isReloadingActive;  
+        private bool IsReloading => Input.GetKeyDown(KeyCode.R) && !isReloadingActive; 
 
-        [SerializeField] private Transform bullet;
-        [SerializeField] private Transform bulletSpawn;
-        [SerializeField] private Vector3 bulletDirection;
-
-        [SerializeField] private Camera mainCamera;
-        [SerializeField] private Camera gunCamera;
-
-        public bool IsShooting => Input.GetMouseButtonDown(0);
-        public bool IsAiming => Input.GetMouseButtonDown(1);
-        public bool IsReloading => Input.GetKeyDown(KeyCode.R);
-
+        private InventorySystem inventory = new InventorySystem();
+        
         private void Awake()
         {
             mainCamera = Camera.main;
-            gunCamera = GameObject.FindGameObjectWithTag("GunCamera").GetComponent<Camera>();
-            if (mainCamera != null) mainCameraPrevPos = mainCamera.fieldOfView;
-            if (gunCamera != null) gunCameraPrevPos = gunCamera.fieldOfView;
+            if (mainCamera == null) Debug.LogError("Main camera is not found!");
         }
 
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                inventory.SwitchGun(); 
+            }
             if (IsShooting) Shoot();
-            if (!IsAiming) ZoomCamera();
-            if (IsReloading) Reload();
+            if (IsReloading) StartCoroutine(Reload());  
         }
 
         public void Shoot()
         {
-            Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // 0.5f, 0.5f, 0 - center of the screen
-            RaycastHit hit; // hit point of the ray
-            var target = // if ray hit smth, target = hit.point, else target = 100 units from the camera
-                Physics.Raycast(ray, out hit)
-                ? hit.point
-                : ray.GetPoint(100);
-            GameObject bul = Instantiate(bullet, bulletSpawn.position, bulletSpawn.rotation).gameObject;
-            bulletDirection = target - bulletSpawn.position;
-            bul.transform.forward = bulletDirection.normalized;
-            bul.GetComponent<Rigidbody>().AddForce(bulletDirection.normalized * speedOfBullet, ForceMode.Impulse);
-        }
-
-        public void ZoomCamera()
-        {
-            if (IsAiming)
+            inventory.ShootCurrentGun(); 
+            
+            Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // Центр экрана
+            if (Physics.Raycast(ray, out var hit))
             {
-                mainCamera.fieldOfView = 20;
-                gunCamera.fieldOfView = 40;
-            }
-            else
-            {
-                mainCamera.fieldOfView = mainCameraPrevPos;
-                gunCamera.fieldOfView = gunCameraPrevPos;
+                if (hit.transform.gameObject.TryGetComponent(out EnemyController enemyController))
+                {
+                    enemyController.TakeDamage(10);
+                }
             }
         }
 
-        public void Reload()
+        // Коррутина для перезарядки
+        public IEnumerator Reload()
         {
+            isReloadingActive = true;  
+            var currentGun = inventory.GetCurrentGun();
             Debug.Log("Reloading...");
+            yield return new WaitForSeconds(3f);  
+            if (currentGun != null)
+            {
+                currentGun.Reload(currentGun.MaxAmmo); // Перезарядка
+                Debug.Log("Reload finished.");
+                isReloadingActive = false;  
+            }
         }
     }
 }

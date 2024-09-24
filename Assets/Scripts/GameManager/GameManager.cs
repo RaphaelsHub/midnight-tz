@@ -5,9 +5,9 @@ namespace GameManager
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private GameObject indexPage;
-        [SerializeField] private GameObject gamePage;
-        [SerializeField] private GameObject deathPage;
+        private GameObject indexPage; 
+        private GameObject gamePage;
+        private GameObject deathPage;
     
         public bool IsGameStarted { get; private set; }
         public bool IsPLayerDead { get; set; }
@@ -17,6 +17,7 @@ namespace GameManager
             indexPage = GetComponentInChildren<Transform>().Find("IndexPage").gameObject;
             gamePage = GetComponentInChildren<Transform>().Find("GamePage").gameObject;
             deathPage = GetComponentInChildren<Transform>().Find("DeathPage").gameObject;
+            PauseTheGame(); 
         }
     
         private void Update()

@@ -1,4 +1,4 @@
-# Test Assignment for Midnight Company, for role Junior Unity Game Developer
+# Test Assignment for Midnight Company, for role Junior Unity Game Developer 07.10.2021
 
 Create a FPS Shooter game with a 3rd person camera view.
 
